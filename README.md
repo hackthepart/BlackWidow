@@ -21,4 +21,5 @@ At present the game is only for two players, one dealer and one player.
 Driver is the main class.  
 The game has many logical and exception errors. Run the game yourself to test them all.  
   
-It is highly recommended that logical and exceptional errors are fixed before adding anyother feature
+It is highly recommended that logical and exceptional errors are fixed before adding anyother feature.  
+Check the issues section for more details.  
