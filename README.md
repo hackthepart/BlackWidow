@@ -23,3 +23,5 @@ The game has many logical and exception errors. Run the game yourself to test th
   
 It is highly recommended that logical and exceptional errors are fixed before adding anyother feature.  
 Check the issues section for more details.  
+You are allowed to include any of your own feature/issue.  
+**Make sure all your pull requests are well explained.**  
