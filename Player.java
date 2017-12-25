@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 class Player {
     private Hand playerHand = new Hand();
@@ -10,9 +11,6 @@ class Player {
      */
     public Player (int fine) {
         this.value = fine;
-        //System.out.println ("Player's Hand");
-        //System.out.println ("****************");
-        //initDeal();
     }
 
     /**
@@ -36,15 +34,19 @@ class Player {
      * para@1 dealer's hand value
      * compare the values of cards in player's and dealer's hand
      */
-    public void compareHands(int dealerHandValue) {
+    public int compareHands(int dealerHandValue,int get) {
         int playerHandValue = getHandValue();
         if (playerHandValue > dealerHandValue && playerHandValue <= 21) {
             System.out.println ("*** Player Wins");
+            return get;
         } else if ( playerHandValue < dealerHandValue && dealerHandValue <= 21) {
             System.out.println ("*** Dealer Wins");
+            return -get;
         } else if (playerHandValue == dealerHandValue) {
             System.out.println ("*** That's a Tie");
+            return 0;
         }
+        return 0;
     }
 
     public boolean playAgain () {
@@ -67,26 +69,52 @@ class Player {
     }
 
     public int bet(int purse) {
-        int ok = 0;
+        int ok = 0,bet=0;
         System.out.print("Purse = ");
         System.out.println(purse);
         System.out.print ("How much would you like to bet? ");
-        int bet = sc.nextInt();
-        if (bet <= purse) {
-            ok = bet;
-        } else {
-            ok = bet;
-            System.out.println ("Don't have enough purse value");
+        boolean continueInput=true;
+        do {
+        	try{
+        		bet = sc.nextInt();
+        		continueInput = false;
+        	}
+        	catch (InputMismatchException ex) {
+        		System.out.println("Enter a valid ammount");
+        		System.out.print("Purse = ");
+                System.out.println(purse);
+                System.out.print ("How much would you like to bet? ");
+        		sc.nextLine();
+        	}
         }
+        while (continueInput);
+        while(bet>purse){
+        		System.out.println ("You don't have enough purse ");
+        		System.out.print("Purse = ");
+                System.out.println(purse);
+        		System.out.print ("How much would you like to bet? ");
+        		continueInput=true;
+                do {
+                	try{
+                		bet = sc.nextInt();
+                		continueInput = false;
+                	}
+                	catch (InputMismatchException ex) {
+                		System.out.println("Enter a valid ammount");
+                		System.out.print("Purse = ");
+                        System.out.println(purse);
+                		System.out.print ("How much would you like to bet? ");
+                		sc.nextLine();
+                	}
+                }while (continueInput);
+        }
+        ok = bet;
         return ok;
     }
 
-    public void playHand() {
-        System.out.print ("Would you like to draw another card? ");
-        String cOption = sc.next();
-        if (cOption.equals("n")) {
-            //compareHands(dealer.getHandValue());
-        } else {
+    public boolean playHand() {
+    	System.out.print ("Would you like to draw another card? ");
+        while(sc.next().equals("y")) {
             int handCount = 0;
             for (int i = 0; i < playerHand.hand.length; i++) {
                 if (playerHand.hand[i] != null) {
@@ -94,6 +122,21 @@ class Player {
                 }
             }
             playerHand.hand[handCount] = playerHand.deal();
+            System.out.println ("****************");
+            System.out.println ("Player's Hand");
+            System.out.println ("****************");
+            playerHand.printHand();
+            System.out.println ("Player's Hand Value = " + getHandValue());
+            if (getHandValue() > 21) {
+                System.out.println ("The player has busted.");
+                return true;
+            }
+            System.out.print ("Would you like to draw another card? ");
         }
+        return false;
+    }
+    
+    public void printPlayerHand() {
+        playerHand.printHand();
     }
 }

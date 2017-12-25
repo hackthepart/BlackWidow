@@ -42,73 +42,33 @@ class Hand {
      * method prints the cards from the deck
      * no. of cards depens on the value of int size being provided as parameter
      */
-    public void printDeck (int size) {
+/*    public void printDeck (int size) {
         int j = 0;
         while (j < size) {
             deck[j].printCard();
             j++;
         }
     }//end printDeck
-
+*/
     /**
      * para@1 int size
      * method shuffles the deck
      * and prints it
      */
-    public static void shuffleDeck (int size) {
+    public static void shuffleDeck () {
         Random rd= new Random();
 
         //create a local Card object
         Card temp = null;
         for (int i = 0; i < deck.length; i++) {
-            // choose 1 random number between 0 and number of cards in the deck - 1
+            // choose a random number between 0 and number of cards in the deck - 1
             int random = rd.nextInt(52);
-            //set the local Card object to the Card object at the ith* index
+            //swap ith position card with random position card.
             temp = deck[i];
-            // set the Card object at the ith index to the Card object at the random index
             deck[i] = deck[random];
-            // set the Card object at the random index to the local Card object.
             deck[random] = temp;
-
         }
-        //int j = 0;
-
-        // prints shuffled deck
-        //while (j < size) {
-        //    deck[j].printCard();
-        //    j++;
-        //}
     }
-
-    //**
-    // * para@1 int size
-    // * method sort the shuffled deck
-    // * and prints it
-    // */
-    //public static void sortDeck(int size) {
-    //    int n = deck.length;
-    //    boolean swap = true;
-    //     Card temp = null;
-    //    while (swap) {
-    //        swap = false;
-    //        for (int j = 1; j < n; j++) {
-    //            int z = compareCard(deck[j], deck[j-1]);
-    //            if (z == -1) {
-    //                temp = deck[j-1];
-    //                deck[j-1] =deck[j];
-    //                deck[j] = temp;
-    //                swap = true;
-    //            }
-
-    //        }
-    //        n = n-1;
-    //    }
-    //    int k = 0;
-    //    while (k < size) {
-    //        deck[k].printCard();
-    //        k++;
-    //    }
-    //}
 
     public void initialDeal() {
         int m = 10;
@@ -124,7 +84,7 @@ class Hand {
     }
 
     public void printHand() {
-        for (int g = 0; g < 2; g++) {
+        for (int g = 0; hand[g]!=null; g++) {
             if (hand[g] != null) {
                 hand[g].printCard();
             } else {
@@ -135,7 +95,7 @@ class Hand {
 
     public int evaluateHand() {
         int u = 0;
-        for(int k= 0; k <2; k++) {
+        for(int k= 0; hand[k] != null ; k++) {
             int a = hand[k].getRank();
             String ok = Integer.toString(a);
             if (ok.equals(("13"))) {
@@ -150,8 +110,6 @@ class Hand {
                 u = u + a;
             }
         }
-        //System.out.print ("Dealer's Hand Value = ");
-        //System.out.println (u);
         return u;
     }
 } //end class

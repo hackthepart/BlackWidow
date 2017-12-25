@@ -6,23 +6,7 @@ class Dealer {
      */
     public Dealer () {
         dealerHand.createDeck();
-        // prints initial deck
-        //System.out.println("Initial deck");
-        //System.out.println("****************");
-        //dealerHand.printDeck(5);
-        //System.out.println("");
-        // prints shuffled deck
-        //System.out.println ("Shuffled Deck");
-        //System.out.println("****************");
-        dealerHand.shuffleDeck(5);
-        //System.out.println ("");
-        //System.out.println ("Sorted Deck");
-        //System.out.println("****************");
-        //dealerHand.sortDeck(5);
-        //System.out.println ("");
-        //System.out.println ("Dealer's Hand");
-        //System.out.println ("****************");
-        //initDeal();
+        dealerHand.shuffleDeck();
     }
 
     /**
@@ -41,25 +25,32 @@ class Dealer {
         return dealerHand.evaluateHand();
     }
 
-    public void playHand() {
-        // draw cards until dealerHand > 16
+    public boolean playHand() {
+        // draw cards until dealerHand >= 16
         while (getHandValue() < 16) {
             int handCount = 0;
             for (int i = 0; i < dealerHand.hand.length; i++) {
-                if (dealerHand.hand[i] != null && handCount > 10) {
+                if (dealerHand.hand[i] != null){// && handCount > 10) {
                     handCount++;
                 }
             } // end for
-            dealerHand.hand[handCount] = dealerHand.deal();
+            dealerHand.hand[handCount] = dealerHand.deal();System.out.print(getHandValue());
         } // end while
 
-        System.out.println ("*************");
+        System.out.println ("****************");
         System.out.println ("Dealer's Hand");
-        System.out.println ("*************");
+        System.out.println ("****************");
         dealerHand.printHand();
+        System.out.println ("Dealer's Hand Value = " + getHandValue());
+        
         // determine if bust
         if (getHandValue() > 21) {
             System.out.println ("The dealer has busted.");
+            return true;
         }
+        return false;
+    }
+    public void printDealerHand() {
+        dealerHand.printHand();
     }
 } //end class
