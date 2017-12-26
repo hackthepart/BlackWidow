@@ -6,43 +6,63 @@ class Driver {
         int purse = 100;
         Dealer dealer = new Dealer();
         Player player = new Player(purse);
-        //System.out.println("");
         boolean some = player.playAgain();
         while (some) {
-            int get = player.bet(purse);
-            //player.bet(purse);
-            if (get <= purse) {
-                //System.out.println (get);
-                System.out.println ("Dealer's Hand");
-                System.out.println ("****************");
-                dealer.initDeal();
-                System.out.println ("Dealer's value = " + dealer.getHandValue());
-                System.out.println ("Player's Hand");
-                System.out.println ("****************");
-                player.initDeal();
-                System.out.println ("Hand Value = " + player.getHandValue());
-                if (player.getHandValue() < dealer.getHandValue()) {
-                    purse = purse - get;
-                } else if (player.getHandValue() > dealer.getHandValue()) {
-                    purse = purse + get;
-                } else if (player.getHandValue() == dealer.getHandValue()) {
-                    purse = purse;
-                }
-                player.playHand();
-                System.out.println ("Hand Value = " + player.getHandValue());
-                dealer.playHand();
-                System.out.println ("Dealer's value = " + dealer.getHandValue());
-                player.compareHands(dealer.getHandValue());
-            } else {
-                System.out.println("");
-            }
-            System.out.print ("Purse = ");
-            System.out.println (purse);
-            System.out.println ("");
-            some = player.playAgain();
-            dealer = new Dealer();
-            System.out.print("\f");
-            //player.playAgain();
+        	flag:{
+        		int get = player.bet(purse);
+        		while(get<1) {
+        			System.out.println("Minimum bet is on 1 Purse.");
+        			break flag;
+        		}
+	        	System.out.println ("****************");
+	            System.out.println ("Dealer's Hand");
+	            System.out.println ("****************");
+	            dealer.initDeal();
+	            System.out.println ("Dealer's Hand value = " + dealer.getHandValue());
+	            
+	            System.out.println ("****************");
+	            System.out.println ("Player's Hand");
+	            System.out.println ("****************");
+	            player.initDeal();
+	            System.out.println ("Player's Hand Value = " + player.getHandValue());
+	            
+	            if(player.playHand()) {
+	            	purse-=get;
+	            	some = player.playAgain();
+	                dealer = new Dealer();
+	                break flag;
+	            }
+	            System.out.println ("****************");
+	            System.out.println ("Player's Hand");
+	            System.out.println ("****************");
+	            player.printPlayerHand();
+	            System.out.println ("Player's Hand Value = " + player.getHandValue());
+	            if(dealer.playHand()) {
+	            	purse+=get;
+	            	some = player.playAgain();
+	                dealer = new Dealer();
+	                break flag;
+	            }
+	//            System.out.println ("*************");
+	  //          System.out.println ("Dealer's Hand");
+	    //        System.out.println ("*************");
+	      //      dealer.printDealerHand();
+	        //    System.out.println ("Dealer's Hand Value = " + dealer.getHandValue());
+	            
+	            purse+=player.compareHands(dealer.getHandValue(),get);
+	            System.out.print ("Purse = ");
+	            System.out.println (purse);
+	            System.out.println ("");
+	            some = player.playAgain();
+	            dealer = new Dealer();
+	            System.out.print("");
+	        }
+        }
+        if(purse>100) {
+        	System.out.println("You are in profit of " + (purse-100));
+        }
+        else {
+        	System.out.println("You are in loss of " + (100-purse));
         }
         System.out.println ("See you Bro!");
     } //end main method
